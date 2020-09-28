@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookShoppingApp.DataModel.Entity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
