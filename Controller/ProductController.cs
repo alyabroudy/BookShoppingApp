@@ -10,6 +10,7 @@ namespace BookShoppingApp.Controller
 {
     class ProductController
     {
+
         EntityContext db;
         private ModelManager<Person> cmd;
 
