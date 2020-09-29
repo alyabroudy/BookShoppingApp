@@ -9,11 +9,11 @@ namespace BookShoppingApp.DataModel.Fixtures
 {
     class PurchaseProductFixtures
     {
-        private ModelManager<PurchaseProduct> pmd;
+        private EntityContext pmd;
 
         public PurchaseProductFixtures()
         {
-            pmd = new ModelManager<PurchaseProduct>();
+            pmd = new EntityContext();
         }
 
         /**

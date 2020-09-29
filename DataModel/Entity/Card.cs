@@ -6,61 +6,72 @@ namespace BookShoppingApp.DataModel.Entity
 {
     class Card
     {
-        private LinkedList<OrderProduct> orderProducts;
+        private LinkedList<Order> orders;
+        private LinkedList<Order> completedOrders;
+        private float sum;
         private int id;
 
         public Card()
         {
-            OrderProducts = new LinkedList<OrderProduct>();
+            orders = new LinkedList<Order>();
+            completedOrders = new LinkedList<Order>();
+            sum = 0;
         }
 
         public int Id { get => id; set => id = value; }
-        internal LinkedList<OrderProduct> OrderProducts { get => orderProducts; set => orderProducts = value; }
-       
+
+
         /**
-         * @ param product: the new product to be added to the card
-         * @ return: if product is found in card it returns it else return the given product after adding it to card
+         * @ param order: the new order to be added to the card
+         * @ return: the added order
          * 
-         * chechs if product already in card so it increase the quantity by 1
-         * if not in list it creates a new OrderProduct with new quantity
+         * chechs if order already in card so it increase its quantity by 1
+         * if not in list then add it
          */
-        public Product AddProduct (Product product){
-            foreach(OrderProduct op in OrderProducts)
+        public Order AddOrder (Order order){
+            sum = sum + order.Sum;
+            foreach(Order o in orders)
             {
-                if(op.Product == product)
+                if(o == order)
                 {
-                    op.Quantity = op.Quantity + 1;
-                    return product;
+                    o.Quantity = o.Quantity + order.Quantity;
+                    return o;
                 }
             }
+            orders.AddLast(order);
+            return order;
+        }
 
-            OrderProduct newOP = new OrderProduct();
-            newOP.Product = product;
-            newOP.Quantity = 1;
-            orderProducts.AddLast(newOP);
-            return newOP.Product;
+
+        public Order CompleteOrder(Order order)
+        {
+            sum = sum - order.Sum;
+           
+            orders.Remove(order);
+            completedOrders.AddLast(order);
+            return order;
         }
 
         /**
-         * @ param product: the new product to be removed from card
+         * @ param order: the order to be removed from card
          * @ return: true if removed or quantity reduced
          * 
-         * chechs if orderProducts quantity greater than 1 so it decrease it with one
-         * if not then remove the OrderProduct from card
+         * checks if order quantity greater than 1 so it decrease it with one
+         * if not then remove the order from card
          */
-        public bool RemoveProduct(Product product)
+        public bool RemoveOrder(Order order)
         {
-            foreach (OrderProduct op in OrderProducts)
+            foreach (Order o in orders)
             {
-                if (op.Product == product)
+                if (o == order)
                 {
-                    if(op.Quantity > 1)
+                    if (o.Quantity > 1)
                     {
-                        op.Quantity = op.Quantity - 1;
+                        o.Quantity = o.Quantity - 1;
                     }
                     else
                     {
-                        OrderProducts.Remove(op);
+                        orders.Remove(o);
                     }
                     return true;
                 }

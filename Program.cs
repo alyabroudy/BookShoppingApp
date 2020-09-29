@@ -21,7 +21,7 @@ namespace EFGetStarted
 
             loginController loginC = new loginController(db);
 
-            ModelManager<Person> pmd = new ModelManager<Person>();
+            EntityManager<Person> pmd = new EntityManager<Person>();
 
             Person p1 = new Person();
             p1.GivenName="sam";

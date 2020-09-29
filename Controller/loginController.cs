@@ -13,24 +13,26 @@ namespace BookShoppingApp
     class loginController
     {
         private EntityContext db;
-        private Session session;
+        //private Session session;
 
         public loginController(EntityContext entityContext)
         {
-            Console.Out.WriteLine("loginController Constructor");
             db = entityContext;
         }
         public bool loginUser(Person person)
         {
-            Console.Out.WriteLine("loginController loginUser");
-
+            if(null == Session.user)
+            {
+                Console.Out.WriteLine("Welcome mr. "+person.GivenName + ". you are already logged-in");
+                return true;
+            }
             DbSet<Person> ps = db.Persons;
             foreach (Person p in ps)
             {
                 bool isValid = (person.Email == p.Email && person.Password == p.Password);
                 if (isValid)
                 {
-                    session = new Session(p);
+                    Session.user = p;
                    Console.Out.WriteLine("Login success!! Welcome: "+ p.GivenName);
                     return true;
                 }

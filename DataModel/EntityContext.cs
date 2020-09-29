@@ -5,23 +5,25 @@ using System.Text;
 using BookShopping;
 using BookShoppingApp.DataModel.Entity;
 using BookShopping.DataModel.Entity;
+using System.Reflection;
 
 namespace BookShoppingApp.DataModel
 {
-    class EntityContext : DbContext
+    class EntityContext: DbContext
     {
         public DbSet<Person> Persons { get; set; }
-        public DbSet<PurchaseProduct> PurchaseProduct { get; set; }
-        public DbSet<Product> Product { get; set; }
-        public DbSet<Order> Order { get; set; }
-        public DbSet<OrderProduct> OrderProduct { get; set; }
-        public DbSet<Card> Card { get; set; }
-        public DbSet<Customer> Customer { get; set; }
-        public DbSet<Author> Author { get; set; }
-        public DbSet<Publisher> Publisher { get; set; }
+        public DbSet<PurchaseProduct> PurchaseProducts { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderProduct> OrderProducts { get; set; }
+        public DbSet<Card> Cards { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
         //public DbSet<Post> Posts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite("Data Source=bookShopping3.db");
+
     }
 }

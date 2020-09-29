@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookShoppingApp.DataModel.Entity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,6 +11,7 @@ namespace BookShopping
         private int gender;
         private string givenName;
         private string surname;
+        private Card card;
         private string streetAddress;
         private int zipCode;
         private string city;
@@ -18,7 +20,13 @@ namespace BookShopping
         private string password;
         private DateTime birthday;
 
-       
+        public Person(string givenName, string surname)
+        {
+            this.givenName = givenName;
+            this.surname = surname;
+            this.Card = new Card();
+        }
+
         public int Id { get => id; set => id = value; }
         public int Gender { get => gender; set => gender = value; }
         public string GivenName { get => givenName; set => givenName = value; }
@@ -30,6 +38,7 @@ namespace BookShopping
         public string Username { get => username; set => username = value; }
         public string Password { get => password; set => password = value; }
         public DateTime Birthday { get => birthday; set => birthday = value; }
+        internal Card Card { get => card; set => card = value; }
 
         public override string ToString()
         {

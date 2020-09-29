@@ -2,6 +2,7 @@
 using BookShopping.DataModel.Entity;
 using BookShoppingApp.DataModel;
 using BookShoppingApp.DataModel.Entity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,8 +12,7 @@ namespace BookShoppingApp.Controller
     class ProductController
     {
 
-        EntityContext db;
-        private ModelManager<Person> cmd;
+        private EntityContext db;
 
         public ProductController()
         {
@@ -20,55 +20,48 @@ namespace BookShoppingApp.Controller
         }
 
         /*
-         * @param customer: the cutomer who wants the product to be added to his card
-         * @param purchaseProduct: the purchaseProduct to be added to a cutomer card
-         * 
-         * addes purchaseProduct to a customer card and decrease purchaseProducts quantity in shop
-         */
-        public PurchaseProduct addPurchaseProductToUserCard(PurchaseProduct purchaseProduct, Customer customer)
+        * get all purchaseProducts
+        */
+        public DbSet<PurchaseProduct> GetProducts()
         {
-            //add purchaseProduct to customer card
-            customer.Card.AddProduct(purchaseProduct.Product);
+            DbSet<PurchaseProduct> products = db.PurchaseProducts; 
 
-            //decrease the purchaseProduct quantity in the store
-            purchaseProduct.Quantity = purchaseProduct.Quantity - 1;
-            db.SaveChanges();
-
-            return purchaseProduct;
+            return products;
         }
 
         /*
-         * @param customer: the cutomer who wants to remove the product from his card
-         * @param purchaseProduct: the purchaseProduct to be removed from a cutomer card
-         * 
-         * removes purchaseProduct from customer card and increase purchaseProducts quantity in shop
-         */
-        public PurchaseProduct removePurchaseProductFromUserCard(PurchaseProduct purchaseProduct, Customer customer)
+        * creates an Order
+        */
+        public Order CreateOrder(Person customer, PurchaseProduct purchaseProduct)
         {
-            //add purchaseProduct to customer card
-            customer.Card.RemoveProduct(purchaseProduct.Product);
-
-            //decrease the purchaseProduct quantity in the store
-            purchaseProduct.Quantity = purchaseProduct.Quantity + 1;
+            Order order = new Order(customer, purchaseProduct.Product,1,1);
+            customer.Card.AddOrder(order);
+            purchaseProduct.Quantity = purchaseProduct.Quantity - 1;
             db.SaveChanges();
-            return purchaseProduct;
+
+            return order;
         }
 
-
-        public PurchaseProduct createPurchaseProduct(PurchaseProduct product)
+        /*
+        * complete an Order
+        */
+        public Order CompleteOrder(Order order)
         {
-            db.PurchaseProduct.Add(product);
-            return product;
+            order.State = Order.SOLD_STATE;
+            order.Customer.Card.CompleteOrder(order);
+            db.SaveChanges();
+
+            return order;
         }
 
-        public Object deletePurchaseProduct(PurchaseProduct product)
+
+        public bool removeOrderFromCard(Person customer, Order order)
         {
-            return db.PurchaseProduct.Remove(product);
+            bool deleted= customer.Card.RemoveOrder(order);
+            db.SaveChanges();
+
+            return deleted;
         }
 
-        public Object updatePurchaseProduct(PurchaseProduct product)
-        {
-            return db.PurchaseProduct.Update(product);
-        }
     }
 }

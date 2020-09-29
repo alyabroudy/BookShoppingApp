@@ -7,13 +7,13 @@ namespace BookShoppingApp.DataModel.Entity
 {
      class Session
     {
-        private Person user;
+        public static Person user;
 
-        public Session(Person customer)
+        public Session(Person user)
         {
-            User = customer;
+            Session.user = user;
         }
 
-        internal Person User { get => user; set => user = value; }
+        public Person User { get => user;}
     }
 }
