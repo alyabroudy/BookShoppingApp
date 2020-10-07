@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookShoppingApp.DataModel.Entity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,15 +11,22 @@ namespace BookShopping
         private int gender;
         private string givenName;
         private string surname;
+        private Card card;
         private string streetAddress;
         private int zipCode;
         private string city;
-        private string emailAddress;
+        private string email;
         private string username;
         private string password;
         private DateTime birthday;
 
-       
+        public Person(string givenName, string surname)
+        {
+            this.givenName = givenName;
+            this.surname = surname;
+            this.Card = new Card();
+        }
+
         public int Id { get => id; set => id = value; }
         public int Gender { get => gender; set => gender = value; }
         public string GivenName { get => givenName; set => givenName = value; }
@@ -26,15 +34,16 @@ namespace BookShopping
         public string StreetAddress { get => streetAddress; set => streetAddress = value; }
         public int ZipCode { get => zipCode; set => zipCode = value; }
         public string City { get => city; set => city = value; }
-        public string EmailAddress { get => emailAddress; set => emailAddress = value; }
+        public string Email { get => email; set => email = value; }
         public string Username { get => username; set => username = value; }
         public string Password { get => password; set => password = value; }
         public DateTime Birthday { get => birthday; set => birthday = value; }
+        internal Card Card { get => card; set => card = value; }
 
         public override string ToString()
         {
             char comma = ',';
-            return gender + comma + givenName + comma + surname + comma + streetAddress + comma + zipCode + comma + city + comma + emailAddress
+            return gender + comma + givenName + comma + surname + comma + streetAddress + comma + zipCode + comma + city + comma + email
                 + comma + username + comma + password + comma + birthday.ToString("d");
         }
     }
