@@ -1,8 +1,8 @@
 ﻿using BookShopping;
-using BookShopping.DataModel.Entity;
 using BookShoppingApp.DataModel;
 using BookShoppingApp.DataModel.Entity;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,29 +14,37 @@ namespace BookShoppingApp.Controller
 
         private EntityContext db;
 
-        public ProductController()
+        public ProductController(EntityContext db)
         {
-            db = new EntityContext();
+            this.db = db;
         }
 
         /*
         * get all purchaseProducts
         */
-        public DbSet<PurchaseProduct> GetProducts()
+        public List<PurchaseProduct> GetPurchaseProducts()
         {
-            DbSet<PurchaseProduct> products = db.PurchaseProducts; 
+            var purchaseProducts = db.PurchaseProducts.Include("Product").ToList();
+           
+            return purchaseProducts;
+        }
 
-            return products;
+        public List<Order> GetUserCompletedOrders(Person person)
+        {
+            var completedOrders = person.Card.CompletedOrders.ToList();
+
+            return completedOrders;
         }
 
         /*
         * creates an Order
         */
-        public Order CreateOrder(Person customer, PurchaseProduct purchaseProduct)
+        public Order CreateOrder(Person person, PurchaseProduct purchaseProduct)
         {
-            Order order = new Order(customer, purchaseProduct.Product,1,1);
-            customer.Card.AddOrder(order);
+            Order order = new Order(person, purchaseProduct.Product);
+            person.Card.AddOrder(order);
             purchaseProduct.Quantity = purchaseProduct.Quantity - 1;
+            
             db.SaveChanges();
 
             return order;
@@ -47,7 +55,7 @@ namespace BookShoppingApp.Controller
         */
         public Order CompleteOrder(Order order)
         {
-            order.State = Order.SOLD_STATE;
+            order.State = Order.COMPLETED_STATE;
             order.Customer.Card.CompleteOrder(order);
             db.SaveChanges();
 
@@ -55,9 +63,9 @@ namespace BookShoppingApp.Controller
         }
 
 
-        public bool removeOrderFromCard(Person customer, Order order)
+        public bool removeOrderFromCard(Person person, Order order)
         {
-            bool deleted= customer.Card.RemoveOrder(order);
+            bool deleted= person.Card.RemoveOrder(order);
             db.SaveChanges();
 
             return deleted;

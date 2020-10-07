@@ -8,17 +8,21 @@ namespace BookShoppingApp.DataModel.Entity
     {
         private LinkedList<Order> orders;
         private LinkedList<Order> completedOrders;
-        private float sum;
+        private double sum;
         private int id;
 
         public Card()
         {
-            orders = new LinkedList<Order>();
-            completedOrders = new LinkedList<Order>();
-            sum = 0;
+            Orders = new LinkedList<Order>();
+            CompletedOrders = new LinkedList<Order>();
+            Sum = 0;
         }
 
-        public int Id { get => id; set => id = value; }
+        public int Id { get => Id1; set => Id1 = value; }
+        public double Sum { get => sum; set => sum = value; }
+        public int Id1 { get => id; set => id = value; }
+        internal LinkedList<Order> Orders { get => orders; set => orders = value; }
+        internal LinkedList<Order> CompletedOrders { get => completedOrders; set => completedOrders = value; }
 
 
         /**
@@ -29,8 +33,8 @@ namespace BookShoppingApp.DataModel.Entity
          * if not in list then add it
          */
         public Order AddOrder (Order order){
-            sum = sum + order.Sum;
-            foreach(Order o in orders)
+            Sum = Sum + order.Sum;
+            foreach(Order o in Orders)
             {
                 if(o == order)
                 {
@@ -38,17 +42,17 @@ namespace BookShoppingApp.DataModel.Entity
                     return o;
                 }
             }
-            orders.AddLast(order);
+            Orders.AddLast(order);
             return order;
         }
 
 
         public Order CompleteOrder(Order order)
         {
-            sum = sum - order.Sum;
+            Sum = Sum - order.Sum;
            
-            orders.Remove(order);
-            completedOrders.AddLast(order);
+            Orders.Remove(order);
+            CompletedOrders.AddLast(order);
             return order;
         }
 
@@ -61,7 +65,7 @@ namespace BookShoppingApp.DataModel.Entity
          */
         public bool RemoveOrder(Order order)
         {
-            foreach (Order o in orders)
+            foreach (Order o in Orders)
             {
                 if (o == order)
                 {
@@ -71,7 +75,7 @@ namespace BookShoppingApp.DataModel.Entity
                     }
                     else
                     {
-                        orders.Remove(o);
+                        Orders.Remove(o);
                     }
                     return true;
                 }

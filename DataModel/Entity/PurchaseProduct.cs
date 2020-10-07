@@ -10,8 +10,25 @@ namespace BookShoppingApp.DataModel.Entity
         private Product product;
         private int quantity;
 
+        public PurchaseProduct()
+        {
+        }
+        public PurchaseProduct(Product product, int quantity)
+        {
+            this.product = product;
+            this.quantity = quantity;
+        }
+
         public int Id { get => id; set => id = value; }
         public int Quantity { get => quantity; set => quantity = value; }
-        internal Product Product { get => product; set => product = value; }
+        public Product Product { get => product; set => product = value; }
+
+        public override string ToString()
+        {
+            return product.ToString() +
+                String.Format("{0,-15} | {1,-10}", "Quantity: ", Quantity + "\n") +
+                "---\n";
+
+        }
     }
 }

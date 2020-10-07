@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using BookShopping;
-using BookShopping.DataModel;
 using BookShoppingApp.Controller;
 using BookShoppingApp.DataModel;
 using BookShoppingApp.DataModel.Entity;
@@ -10,26 +9,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookShoppingApp
 {
-    class loginController
+    class LoginController
     {
         private EntityContext db;
         //private Session session;
 
-        public loginController(EntityContext entityContext)
+        public LoginController(EntityContext db)
         {
-            db = entityContext;
+            this.db = db;
         }
-        public bool loginUser(Person person)
+        public bool loginUser(string email, string password)
         {
-            if(null == Session.user)
+            if(null != Session.user)
             {
-                Console.Out.WriteLine("Welcome mr. "+person.GivenName + ". you are already logged-in");
+                Console.Out.WriteLine("Welcome mr. "+Session.user.GivenName + ". you are already logged-in");
                 return true;
             }
             DbSet<Person> ps = db.Persons;
             foreach (Person p in ps)
             {
-                bool isValid = (person.Email == p.Email && person.Password == p.Password);
+                bool isValid = (email == p.Email && password == p.Password);
                 if (isValid)
                 {
                     Session.user = p;
@@ -40,8 +39,8 @@ namespace BookShoppingApp
             }
             return false;
         }
-
-        public Person registerUser(Person person)
+        /*
+        public Person RegisterUser(Person person)
         {
             bool isNotValid = false; ;
             DbSet<Person> ps = db.Persons;
@@ -61,10 +60,10 @@ namespace BookShoppingApp
                 return person;
             }
         }
-
+        */
         public void logout()
         {
-            session.User = null;
+            Session.user = null;
         }
     }
 }
