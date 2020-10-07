@@ -19,12 +19,14 @@ namespace BookShopping
         private string username;
         private string password;
         private DateTime birthday;
-
+        public Person()
+        {
+        }
         public Person(string givenName, string surname)
         {
             this.givenName = givenName;
             this.surname = surname;
-            this.Card = new Card();
+            
         }
 
         public int Id { get => id; set => id = value; }
@@ -38,7 +40,7 @@ namespace BookShopping
         public string Username { get => username; set => username = value; }
         public string Password { get => password; set => password = value; }
         public DateTime Birthday { get => birthday; set => birthday = value; }
-        internal Card Card { get => card; set => card = value; }
+        public Card Card { get => card; set => card = value; }
 
         public override string ToString()
         {

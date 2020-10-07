@@ -7,13 +7,13 @@ using System.Text;
 
 namespace BookShoppingApp.DataModel.Fixtures
 {
-    class PurchaseProductFixtures
+    class DataFixtures
     {
-        private EntityContext pmd;
+        private EntityContext db;
 
-        public PurchaseProductFixtures()
+        public DataFixtures()
         {
-            pmd = new EntityContext();
+            db = new EntityContext();
         }
 
         /**
@@ -21,7 +21,7 @@ namespace BookShoppingApp.DataModel.Fixtures
          * 
          * imports products inpformation from a file  and save it to database
          */
-        public void importProducts(string fileName = "spiegel-bestseller.txt")
+        public void ImportProducts(string fileName = "spiegel-bestseller.txt")
         {
             //Console.WriteLine();
             string filePath= Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName, @fileName);
@@ -43,27 +43,28 @@ namespace BookShoppingApp.DataModel.Fixtures
                         {
                             case "AUTHOR":
                                 string[] names = line[1].Split(',');
-                                p.Author = new Author(names[0], line[1]);
-                                Console.Out.WriteLine(p.Author.GivenName);
+                               // p.Author = new Author(names[0], line[1]);
+                                p.Author = line[1];
                                 break;
                             case "TITLE":
                                 p.Title = line[1];
                                 break;
-                            case "EAN":
-                                p.EAN1 = line[1];
+                            case "ean":
+                                p.Ean = line[1];
                                 break;
                             case "PUBLISHER":
-                                p.Publisher = new Publisher(line[1]);
+                                //p.Publisher = new Publisher(line[1]);
+                                p.Publisher = line[1];
                                 break;
                             case "DATE":
-                                //p.ReleaseDate = DateTime.ParseExact(line[1],"MMMM yyyy", null);
-                                p.ReleaseDate = line[1];
+                                p.ReleaseDate = DateTime.ParseExact(line[1],"MMMM yyyy", null);
+                                //p.ReleaseDate = line[1];
                                 break;
                             case "PRICE":
                                string newValue = line[1].Substring(0, 3).Replace(",", ".");
                                 p.Price = float.Parse(newValue);
                                 pp.Product = p;
-                                pmd.add(pp);
+                                db.Add(pp);
                                 break;
                         }
                         
@@ -73,14 +74,10 @@ namespace BookShoppingApp.DataModel.Fixtures
            // Console.WriteLine("{0} {1} geladen", count - 1, count == 1 ? "Datensatz wurde" : "Datensätze wurden");
         }
 
-        /**
-         * create new products and save it to database
-         */
-        public void createProducts()
+
+        public void ImportPersons(string fileName = "spiegel-bestseller.txt")
         {
 
         }
-
-
     }
 }
