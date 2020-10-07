@@ -27,17 +27,15 @@ namespace BookShoppingApp.Controller
         public void start()
         {
             while (isAlive)
-            {
-                
+            {    
                 RunCommand(MainMenu());
-
             }
         }
 
 
         public char MainMenu()
         {
-            string ersteller = "Alyabroudy, Mohammad";
+            string ersteller = "Alyabroudy, Aldera";
             double version = 1.0;
 
             Console.WriteLine("-------------------------------");
@@ -129,12 +127,31 @@ namespace BookShoppingApp.Controller
         private void ShowProducts()
         {
             var purchaseProducts = productController.GetPurchaseProducts();
-
+            bool exit = false;
             Console.WriteLine("Angebote:" + purchaseProducts.Count);
             foreach (PurchaseProduct p in purchaseProducts)
             {
                Console.Write( p.ToString());
             }
+            while (!exit)
+            {
+                Console.WriteLine("Um ein Product zu Ihrem Warenkorp hinzufügen geben Sie bitt die Product ID!!");
+                Console.Write("ProductID: ");
+                string productID = Console.ReadLine();
+                int number;
+                if(productID == "x") { }
+                bool success = Int32.TryParse(productID, out number);
+                if (success)
+                {
+                    Console.WriteLine("Product '{0}' würde hingefügt!", productID);
+                    exit = true;
+                }
+                else
+                {
+                    Console.WriteLine("Ungültige Product ID");
+                }
+            }
+
         }
 
         private void Login()
