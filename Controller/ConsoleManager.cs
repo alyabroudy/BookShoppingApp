@@ -97,6 +97,11 @@ namespace BookShoppingApp.Controller
                 }
         }
 
+        private void ShowUserCard()
+        {
+            throw new NotImplementedException();
+        }
+
         private void logout()
         {
             isAlive = false;
