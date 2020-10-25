@@ -14,7 +14,7 @@ namespace EFGetStarted
     {
         static void Main()
         {
-            Console.Out.WriteLine("main");
+            System.Console.Out.WriteLine("main");
             // initiate EntityManager
             EntityContext db = new EntityContext();
 
@@ -63,34 +63,34 @@ namespace EFGetStarted
 
             cm.start();
 
-            
+
             // ModelManager mg = new ModelManager();
-           // PurchaseProductFixtures purchaseProductFixtures = new PurchaseProductFixtures();
-           // purchaseProductFixtures.importProducts();
+            // PurchaseProductFixtures purchaseProductFixtures = new PurchaseProductFixtures();
+            // purchaseProductFixtures.importProducts();
 
-            
 
-          /*  EntityManager<Person> pmd = new EntityManager<Person>();
 
-            Person p1 = new Person();
-            p1.GivenName="sam";
-            p1.Surname="soso";
-            p1.Email = "soso@gmail.com";
-            p1.Password = "123";
+            /*  EntityManager<Person> pmd = new EntityManager<Person>();
 
-            //db.Persons.Add(p1);
-           //db.SaveChanges();
-            //pmd.GetAll();
-            loginC.loginUser(p1);
-            */
+              Person p1 = new Person();
+              p1.GivenName="sam";
+              p1.Surname="soso";
+              p1.Email = "soso@gmail.com";
+              p1.Password = "123";
+
+              //db.Persons.Add(p1);
+             //db.SaveChanges();
+              //pmd.GetAll();
+              loginC.loginUser(p1);
+              */
 
 
             //Type t = typeof(Person);
             //mg.addData(p1, typeof(Person));
 
             //mg.getData(1, typeof(Person));
-            
-            Console.Out.WriteLine("mainEnd");
+
+            System.Console.Out.WriteLine("mainEnd");
 
             /*
             using (var db = new BloggingContext())

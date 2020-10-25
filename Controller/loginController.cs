@@ -22,7 +22,7 @@ namespace BookShoppingApp
         {
             if(null != Session.user)
             {
-                Console.Out.WriteLine("Welcome mr. "+Session.user.GivenName + ". you are already logged-in");
+                System.Console.Out.WriteLine("Welcome mr. "+Session.user.GivenName + ". you are already logged-in");
                 return true;
             }
             DbSet<Person> ps = db.Persons;
@@ -32,7 +32,7 @@ namespace BookShoppingApp
                 if (isValid)
                 {
                     Session.user = p;
-                   Console.Out.WriteLine("Login success!! Welcome: "+ p.GivenName);
+                    System.Console.Out.WriteLine("Login success!! Welcome: "+ p.GivenName);
                     return true;
                 }
 

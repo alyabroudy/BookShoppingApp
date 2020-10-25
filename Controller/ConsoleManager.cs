@@ -38,26 +38,26 @@ namespace BookShoppingApp.Controller
             string ersteller = "Alyabroudy, Aldera";
             double version = 1.0;
 
-            Console.WriteLine("-------------------------------");
-            Console.WriteLine("Ersteller: {0:s}", ersteller);
-            Console.WriteLine("Version: {0:f}", version);
-            Console.WriteLine("------------Hilfe Menue-------------");
-            if(null != Session.user) { 
-                Console.WriteLine(String.Format("{0,-3} | {1,-5}", "Welcome: ", Session.user.GivenName));
+            System.Console.WriteLine("-------------------------------");
+            System.Console.WriteLine("Ersteller: {0:s}", ersteller);
+            System.Console.WriteLine("Version: {0:f}", version);
+            System.Console.WriteLine("------------Hilfe Menue-------------");
+            if(null != Session.user) {
+                System.Console.WriteLine(String.Format("{0,-3} | {1,-5}", "Welcome: ", Session.user.GivenName));
             }
             else
             {
-                Console.WriteLine(String.Format("{0,-3} | {1,-5}", "1", ": Login"));
+                System.Console.WriteLine(String.Format("{0,-3} | {1,-5}", "1", ": Login"));
             }
 
-            
-            Console.WriteLine(String.Format("{0,-3} | {1,-5}", "2", ": Angebote anschauen"));
-            Console.WriteLine(String.Format("{0,-3} | {1,-5}", "3", ": Warenkorp anschauen"));
-            Console.WriteLine(String.Format("{0,-3} | {1,-5}", "4", ": Gekaufte Waren anschauen"));
-            Console.WriteLine(String.Format("{0,-3} | {1,-5}", "5", ": Logout und ausschalten"));
-            Console.WriteLine("-------------------------------");
 
-            string command = Console.ReadLine();
+            System.Console.WriteLine(String.Format("{0,-3} | {1,-5}", "2", ": Angebote anschauen"));
+            System.Console.WriteLine(String.Format("{0,-3} | {1,-5}", "3", ": Warenkorp anschauen"));
+            System.Console.WriteLine(String.Format("{0,-3} | {1,-5}", "4", ": Gekaufte Waren anschauen"));
+            System.Console.WriteLine(String.Format("{0,-3} | {1,-5}", "5", ": Logout und ausschalten"));
+            System.Console.WriteLine("-------------------------------");
+
+            string command = System.Console.ReadLine();
             return command[0];
         }
 
@@ -69,27 +69,27 @@ namespace BookShoppingApp.Controller
                 switch (command)
                 {
                     case '1':
-                        Console.WriteLine("*** Login ***");
+                    System.Console.WriteLine("*** Login ***");
                         Login();
                         break;
 
                     case '2':
-                        Console.WriteLine("*** Angebote ***");
+                    System.Console.WriteLine("*** Angebote ***");
                         ShowProducts();
                         break;
 
                     case '3':
-                        Console.WriteLine("*** Warenkorp ***");
+                    System.Console.WriteLine("*** Warenkorp ***");
                         ShowUserCard();
                         break;
 
                     case '4':
-                        Console.WriteLine("*** Gekaufte Waren ***");
+                    System.Console.WriteLine("*** Gekaufte Waren ***");
                         ShowPurchaseHistory();
                         break;
 
                     case '5':
-                        Console.WriteLine("*** Logout und ausschalten ***");
+                       System. Console.WriteLine("*** Logout und ausschalten ***");
                         logout();
                         break;
                 }
@@ -97,6 +97,23 @@ namespace BookShoppingApp.Controller
 
         private void ShowUserCard()
         {
+                                                //Warernkorb items auflisten 
+            Card c = new Card();
+            if (c.Sum>0) 
+            {
+
+           
+            foreach (var item in c.Orders)
+            {
+                System.Console.WriteLine(item.ToString());
+            }
+            }
+            else
+                {
+                    System.Console.WriteLine("WarenKorb ist Leer !!");
+                }
+
+            
             throw new NotImplementedException();
         }
 
@@ -111,44 +128,44 @@ namespace BookShoppingApp.Controller
             {
                 var completedOrders = productController.GetUserCompletedOrders(Session.user);
 
-                Console.WriteLine("Purchase History:" + completedOrders.Count);
+                System.Console.WriteLine("Purchase History:" + completedOrders.Count);
                 foreach (Order o in completedOrders)
                 {
-                    Console.Write(o.ToString());
+                    System.Console.Write(o.ToString());
                 }
             }
             else
             {
-                Console.WriteLine("Please Login first....");
+                System.Console.WriteLine("Please Login first....");
             }
             
         }
 
-        private void ShowProducts()
+        private void ShowProducts() //?
         {
             var purchaseProducts = productController.GetPurchaseProducts();
             bool exit = false;
-            Console.WriteLine("Angebote:" + purchaseProducts.Count);
+            System.Console.WriteLine("Angebote:" + purchaseProducts.Count);
             foreach (PurchaseProduct p in purchaseProducts)
             {
-               Console.Write( p.ToString());
+                System.Console.Write( p.ToString());
             }
             while (!exit)
             {
-                Console.WriteLine("Um ein Product zu Ihrem Warenkorp hinzufügen geben Sie bitt die Product ID!!");
-                Console.Write("ProductID: ");
-                string productID = Console.ReadLine();
+                System.Console.WriteLine("Um ein Product zu Ihrem Warenkorp hinzufügen geben Sie bitt die Product ID!!");
+                System.Console.Write("ProductID: ");
+                string productID = System.Console.ReadLine();
                 int number;
                 if(productID == "x") { }
                 bool success = Int32.TryParse(productID, out number);
                 if (success)
                 {
-                    Console.WriteLine("Product '{0}' würde hingefügt!", productID);
+                    System.Console.WriteLine("Product '{0}' würde hingefügt!", productID);
                     exit = true;
                 }
                 else
                 {
-                    Console.WriteLine("Ungültige Product ID");
+                    System.Console.WriteLine("Ungültige Product ID");
                 }
             }
 
@@ -156,21 +173,21 @@ namespace BookShoppingApp.Controller
 
         private void Login()
         {
-                Console.WriteLine("------------User Login-------------");
-                Console.WriteLine("Email:");
-                string email = Console.ReadLine();
+            System.Console.WriteLine("------------User Login-------------");
+            System.Console.WriteLine("Email:");
+            string email = System.Console.ReadLine();
 
-                Console.WriteLine("Password:");
-                string password = Console.ReadLine();
+            System.Console.WriteLine("Password:");
+                string password = System.Console.ReadLine();
 
                 if (this.loginController.loginUser(email, password))
             {
-                Console.WriteLine("------------Login Success-------------");
+                System.Console.WriteLine("------------Login Success-------------");
 
             }
             else
             {
-                Console.WriteLine("------------Login Failed-------------");
+                System.Console.WriteLine("------------Login Failed-------------");
             }
             start();
         }
