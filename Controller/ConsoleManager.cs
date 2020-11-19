@@ -97,7 +97,16 @@ namespace BookShoppingApp.Controller
 
         private void ShowUserCard()
         {
-            throw new NotImplementedException();
+            if (Session.user == null) { Console.WriteLine("Bitte zuerst Einloggen"); return; }
+
+            var orders = Session.user.Card.Orders;
+            
+            foreach (Order o in orders)
+            {
+                Console.WriteLine("Product '{0}' '{1}' Kostet: '{2}'  und Quantity: '{3}'", o.Product.Id, o.Product.Title, o.Product.Price, o.Quantity);
+          
+            }
+           
         }
 
         private void logout()
@@ -136,10 +145,13 @@ namespace BookShoppingApp.Controller
             while (!exit)
             {
                 Console.WriteLine("Um ein Product zu Ihrem Warenkorp hinzufügen geben Sie bitt die Product ID!!");
+                Console.WriteLine("Oder: x   für exit");
                 Console.Write("ProductID: ");
                 string productID = Console.ReadLine();
                 int number;
-                if(productID == "x") { }
+                if(productID == "x") { break; }
+                if(Session.user == null) { Console.WriteLine("Bitte zuerst Einloggen");  break; }
+
                 bool success = Int32.TryParse(productID, out number);
                 if (success)
                 {
