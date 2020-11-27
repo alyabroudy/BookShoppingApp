@@ -3,7 +3,10 @@ using BookShoppingApp.DataModel.Entity;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using BookShopping;
+
 
 namespace BookShoppingApp.DataModel.Fixtures
 {
@@ -15,7 +18,7 @@ namespace BookShoppingApp.DataModel.Fixtures
         {
             db = new EntityContext();
         }
-
+        Person pe = new Person();
         /**
          *@param file: file path and name of the productlist  
          * 
@@ -25,7 +28,7 @@ namespace BookShoppingApp.DataModel.Fixtures
         {
             //Console.WriteLine();
             string filePath= Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName, @fileName);
-            Console.WriteLine(filePath);
+           System. Console.WriteLine(filePath);
             using (
                  StreamReader sw = new StreamReader(filePath, Encoding.GetEncoding("iso-8859-1"))
                  )
@@ -37,6 +40,7 @@ namespace BookShoppingApp.DataModel.Fixtures
                             //string[] line = sw.ReadLine().Split(';');   //EXCEL
                             string[] line = sw.ReadLine().Split(':');   //EXCEL  
                         PurchaseProduct pp= new PurchaseProduct();
+                        
                         pp.Quantity = 5;
                         Product p = new Product();
                         switch (line[0])
@@ -75,9 +79,36 @@ namespace BookShoppingApp.DataModel.Fixtures
         }
 
 
-        public void ImportPersons(string fileName = "spiegel-bestseller.txt")
+        public void ImportPersons(string fileName = "fake-persons.txt")
         {
+            string filePath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName, @fileName);
+           System.Console.WriteLine(filePath);
+            List<Product> allPersons = new List<Product>();
 
+            List<string> productlines = File.ReadAllLines(filePath).ToList();
+
+            //Remove the first line
+            productlines.RemoveAt(0);
+
+            foreach (string line in productlines)
+            {
+                string[] parts = line.Split(',');
+                
+                //Person pe = new Person();
+                pe.Gender = parts[0];
+                pe.GivenName = parts[1];
+                pe.Surname= parts[2];
+                pe.StreetAddress= parts[3];
+                pe.ZipCode= Convert.ToInt32 (parts[4]);
+                pe.City= parts[5];
+                pe.Email= parts[6];
+                pe.Username= parts[7];
+                pe.Password= parts[8];
+                pe.Birthday= Convert.ToDateTime (parts[9]);
+               
+
+                //allPersons.Add(parts);
+            }
         }
     }
 }

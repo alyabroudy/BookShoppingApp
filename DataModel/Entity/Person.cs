@@ -8,7 +8,7 @@ namespace BookShopping
     class Person
     {
         private int id;
-        private int gender;
+        private string gender;
         private string givenName;
         private string surname;
         private Card card;
@@ -30,7 +30,7 @@ namespace BookShopping
         }
 
         public int Id { get => id; set => id = value; }
-        public int Gender { get => gender; set => gender = value; }
+        public string Gender { get => gender; set => gender = value; }
         public string GivenName { get => givenName; set => givenName = value; }
         public string Surname { get => surname; set => surname = value; }
         public string StreetAddress { get => streetAddress; set => streetAddress = value; }
