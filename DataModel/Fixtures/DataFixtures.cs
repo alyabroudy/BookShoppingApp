@@ -28,7 +28,11 @@ namespace BookShoppingApp.DataModel.Fixtures
         {
             //Console.WriteLine();
             string filePath= Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName, @fileName);
+
            System. Console.WriteLine(filePath);
+
+          
+
             using (
                  StreamReader sw = new StreamReader(filePath, Encoding.GetEncoding("iso-8859-1"))
                  )
